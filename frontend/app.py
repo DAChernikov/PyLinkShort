@@ -46,7 +46,22 @@ elif menu == "Мои ссылки":
             internal_api_url = st.secrets["API_URL"] if "API_URL" in st.secrets else "http://localhost:8000"
             public_api_url = internal_api_url.replace("http://api:8000", "http://localhost:8000")
             df["Short URL"] = public_api_url + "/" + df["short_code"].astype(str)
-            st.table(df)
+            st.dataframe(df)
+            st.write("Нажмите кнопку «Удалить» для удаления соответствующей ссылки:")
+            for link in links:
+                cols = st.columns([3, 5, 2])
+                with cols[0]:
+                    st.write(f"**Short Code:** {link['short_code']}")
+                with cols[1]:
+                    st.write(f"**Original URL:** {link['original_url']}")
+                with cols[2]:
+                    if st.button("Удалить", key=f"del_{link['id']}"):
+                        result = fu.delete_link(API_URL, link['short_code'], st.session_state.session)
+                        if result.get("detail"):
+                            st.error(result["detail"])
+                        else:
+                            st.success(f"Ссылка {link['short_code']} удалена")
+                            st.experimental_rerun()  # обновляем список ссылок
         else:
             st.info("У вас пока нет сокращенных ссылок.")
 
