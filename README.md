@@ -185,6 +185,158 @@ volumes:
 docker-compose up --build
 ```
 
+## Тестирование API
+Примеры запросов к API через Postman (где API_URL - base url сервиса API):
+
+### 1. Register User
+ - **Endpoint**: `{{API_URL}}/api/auth/register`
+ - **Method**: `POST`
+ - **Headers**:
+ - **Content-Type**: `application/json`
+ - **Body**:
+
+```json
+{
+  "username": "testuser",
+  "password": "testpass",
+  "email": "testuser@example.com"
+}
+```
+
+> **Expected Response:** `HTTP 201 Created, JSON с данными пользователя (например, id, username, email, created_at).`
+
+### 2. Login User
+ - **Endpoint**: `{{API_URL}}/api/auth/login`
+ - **Method:** `POST`
+ - **Headers:**
+ - **Content-Type:** application/json
+ - **Body:**
+```json
+{
+  "username": "testuser",
+  "password": "testpass"
+}
+```
+
+> **Expected Response:** `HTTP 200 OK, JSON с сообщением об успешном входе и данными пользователя.`
+> `Cookie с именем session_id сохраняется для дальнейших запросов.`
+
+### 3. Get Profile
+ - **Endpoint:** `{{API_URL}}/api/auth/profile`
+ - **Method:** `GET`
+ - **Headers:**
+ - **Cookie:** `session_id={{session_id}}`
+ - **Body:** (нет)
+
+> **Expected Response:** `HTTP 200 OK, JSON с данными профиля пользователя.`
+
+### 4. Create Link
+ - **Endpoint:** `{{API_URL}}/api/links`
+ - **Method:** `POST`
+ - **Headers:**
+ - **Content-Type:** `application/json`
+ - **Cookie:** `session_id={{session_id}}`
+ - **Body:**
+
+```json
+{
+  "original_url": "https://example.com/very-long-url",
+  "custom_alias": "testalias",
+  "expires_in_days": 30
+}
+```
+
+> **Expected Response:** `HTTP 201 Created, JSON с данными ссылки (включая поле short_code)`.
+
+### 5. List Links
+ - **Endpoint:** `{{API_URL}}/api/links`
+ - **Method:** `GET`
+ - **Headers:**
+ - **Cookie:** `session_id={{session_id}}`
+ - **Body:** (нет)
+
+> **Expected Response:** `HTTP 200 OK, JSON-массив объектов ссылок, созданных пользователем.`
+
+### 6. Get Link by short_code
+ - **Endpoint:** `{{API_URL}}/api/links/{{short_code}}`
+ - **Method:** `GET`
+ - **Headers:**
+ - **Cookie:** `session_id={{session_id}}`
+ - **Body:** (нет)
+
+> **Expected Response:** `HTTP 200 OK, JSON с данными ссылки для указанного short_code.`
+
+### 7. Update Link
+ - **Endpoint:** `{{API_URL}}/api/links/{{short_code}}`
+ - **Method:** `PUT`
+ - **Headers:**
+ - **Content-Type:** `application/json`
+ - **Cookie:** `session_id={{session_id}}`
+ - **Body:**
+
+```json
+{
+  "original_url": "https://example.com/updated-url",
+  "expires_in_days": 60
+}
+```
+
+> **Expected Response:** `HTTP 200 OK, JSON с обновлёнными данными ссылки.`
+
+### 8. Get Link Stats
+ - **Endpoint:** `{{API_URL}}/api/links/{{short_code}}/stats`
+ - **Method:** `GET`
+ - **Headers:**
+ - **Cookie:** `session_id={{session_id}}`
+ - **Body:** (нет)
+ - **Expected Response:** `HTTP 200 OK, JSON со статистикой (поля: original_url, created_at, access_count, last_accessed).`
+
+### 9. Search Link by Original URL
+ - **Endpoint:** `{{API_URL}}/api/links/search?original_url=https://example.com/very-long-url`
+ - **Method:** `GET`
+ - **Headers:**
+ - **Cookie:** `session_id={{session_id}}`
+ - **Body:** (нет)
+
+> **Expected Response:** `HTTP 200 OK, JSON с полями short_code и original_url.`
+
+### 10. Public Redirect
+ - **Endpoint:** `{{API_URL}}/{{short_code}}`
+ - **Method:** GET
+ - **Headers:** (нет)
+ - **Body:** (нет)
+ -
+
+> **Expected Response:** `HTTP 302 (или 307) Redirect. Заголовок Location с оригинальным URL.`
+> Note: Для тестирования нужно отключить автоматическое следование (automatic redirect follow) редиректам в Postman.
+
+### 11. Delete Link
+ - **Endpoint:** `{{API_URL}}/api/links/{{short_code}}`
+ - **Method:** `DELETE`
+ - **Headers:**
+ - **Cookie:** `session_id={{session_id}}`
+ - **Body:** (нет)
+
+>**Expected Response:** `HTTP 204 No Content.`
+> Note: После удаления повторный запрос к этому short_code должен вернуть 404.
+
+### 12. Delete User (Account)
+- **Endpoint:** `{{API_URL}}/api/auth/user`
+- **Method:** `DELETE`
+- **Headers:**
+- **Cookie:** `session_id={{session_id}}`
+- **Body:** (нет)
+
+> **Expected Response:** `HTTP 200 OK, JSON с сообщением:`
+
+```json
+{
+  "message": "Пользователь удалён"
+}
+```
+
+> После удаления аккаунта дальнейшие запросы, требующие аутентификации, должны возвращать 401 Unauthorized.
+
 ## Deploy на Render
 
 Проект был задеплойен в интернет с помощью платформы [Render](https://dashboard.render.com/). 
