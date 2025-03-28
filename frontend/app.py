@@ -39,6 +39,7 @@ elif menu == "Мои ссылки":
         st.warning("Войдите в систему, чтобы увидеть ваши ссылки")
     else:
         st.header("Ваши ссылки")
+        links_container = st.empty()
         links = fu.get_links(API_URL, st.session_state.session)
         if links:
             import pandas as pd
@@ -46,7 +47,7 @@ elif menu == "Мои ссылки":
             internal_api_url = st.secrets["API_URL"] if "API_URL" in st.secrets else "http://localhost:8000"
             public_api_url = internal_api_url.replace("http://api:8000", "http://localhost:8000")
             df["Short URL"] = public_api_url + "/" + df["short_code"].astype(str)
-            st.dataframe(df)
+            links_container.table(df)
             st.write("Нажмите кнопку «Удалить» для удаления соответствующей ссылки:")
             for link in links:
                 cols = st.columns([3, 5, 2])
@@ -56,12 +57,19 @@ elif menu == "Мои ссылки":
                     st.write(f"**Original URL:** {link['original_url']}")
                 with cols[2]:
                     if st.button("Удалить", key=f"del_{link['id']}"):
-                        result = fu.delete_link(API_URL, link['short_code'], st.session_state.session)
+                        result = fu.delete_link(API_URL, link["short_code"], st.session_state.session)
                         if result.get("detail"):
                             st.error(result["detail"])
                         else:
                             st.success(f"Ссылка {link['short_code']} удалена")
-                            st.experimental_rerun()  # обновляем список ссылок
+                            # Обновляем таблицу, получая заново список ссылок:
+                            updated_links = fu.get_links(API_URL, st.session_state.session)
+                            if updated_links:
+                                df_updated = pd.DataFrame(updated_links)
+                                df_updated["Short URL"] = public_api_url + "/" + df_updated["short_code"].astype(str)
+                                links_container.table(df_updated)
+                            else:
+                                links_container.info("У вас пока нет сокращенных ссылок.")
         else:
             st.info("У вас пока нет сокращенных ссылок.")
 
