@@ -26,10 +26,9 @@ async def redirect_short_url(short_code: str):
         link = db.query(Link).filter(Link.short_code == short_code).first()
         if not link:
             raise HTTPException(status_code=404, detail="Ссылка не найдена")
-        # Сравниваем с timezone-aware datetime
         if link.expires_at and link.expires_at < datetime.now(timezone.utc):
             raise HTTPException(status_code=410, detail="Ссылка устарела")
         original_url = link.original_url
         set_url_to_cache(short_code, original_url, ttl=3600)
     asyncio.create_task(update_link_stats(short_code))
-    return RedirectResponse(url=original_url)
+    return RedirectResponse(url=original_url, status_code=302)
