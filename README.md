@@ -190,7 +190,7 @@ docker-compose up --build
 Проект был задеплойен в интернет с помощью платформы [Render](https://dashboard.render.com/). 
 На основе кода этого репозитория, в этой платформе было развернуто 4 компонента сервиса:
 
-1. FastAPI сервис (backend): [API_URL](https://pylinkshort.onrender.com)
+1. FastAPI сервис (backend): API_URL: https://pylinkshort.onrender.com
 2. StreamLit сервис (frontend, пользовательский интерфейс): [PyLinkShort_webpage](https://pylinkshort-webpage.onrender.com)
 3. PostgreSQL DB: `postgresql://@dpg-cvjarqemcj7s73ean8u0-a.oregon-postgres.render.com/db_zfxs`
 4. Redis (key-value store): `redis://red-cvjb0s8gjchc739ams20:6379`
