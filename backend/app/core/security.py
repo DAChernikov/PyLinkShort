@@ -3,10 +3,10 @@ from passlib.context import CryptContext
 from fastapi import HTTPException, Request, Depends
 from sqlalchemy.orm import Session
 
-from app.models.user import User
-from app.core.database import get_db
-from app.core.config import SESSION_TTL
-from app.core.cache import redis_client
+from ..models.user import User
+from ..core.database import get_db
+from ..core.config import SESSION_TTL
+from ..core.cache import redis_client
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

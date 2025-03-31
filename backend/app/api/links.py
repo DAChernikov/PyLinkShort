@@ -3,12 +3,12 @@ from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 
-from app.schemas.link import LinkCreate, LinkOut, LinkUpdate, LinkStats, LinkSearchOut
-from app.models.link import Link
-from app.core.database import get_db
-from app.core.security import get_current_user
-from app.services.shortener import generate_short_code
-from app.core.cache import delete_url_cache
+from ..schemas.link import LinkCreate, LinkOut, LinkUpdate, LinkStats, LinkSearchOut
+from ..models.link import Link
+from ..core.database import get_db
+from ..core.security import get_current_user
+from ..services.shortener import generate_short_code
+from ..core.cache import delete_url_cache
 
 router = APIRouter()
 

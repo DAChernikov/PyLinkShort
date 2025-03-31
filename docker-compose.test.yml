@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: test_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - testnet
+
+  redis:
+    image: redis:6
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - testnet
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: api
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "8000:8000"
+    networks:
+      - testnet
+
+  test_api:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    container_name: test_api
+    depends_on:
+      - api
+    networks:
+      - testnet
+    environment:
+      PYTHONPATH: /app/backend
+    command: >
+      sh -c "sleep 5 && coverage run -m pytest tests && coverage report"
+
+volumes:
+  postgres_data:
+
+networks:
+  testnet:
+    driver: bridge

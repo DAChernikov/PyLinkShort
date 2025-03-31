@@ -3,8 +3,8 @@ from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 from sqlalchemy.orm import Session
 
-from app.core.database import get_db
-from app.models.link import Link
+from ..core.database import get_db
+from ..models.link import Link
 
 _executor = ThreadPoolExecutor()
 

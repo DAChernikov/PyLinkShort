@@ -4,11 +4,11 @@ from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
 
-from app.api import auth, links
-from app.core.cache import get_url_from_cache, set_url_to_cache
-from app.core.database import engine, Base, get_db
-from app.models.link import Link
-from app.services.analytics import update_link_stats
+from .api import auth, links
+from .core.cache import get_url_from_cache, set_url_to_cache
+from .core.database import engine, Base, get_db
+from .models.link import Link
+from .services.analytics import update_link_stats
 
 app = FastAPI(title="URL Shortener API", version="1.0")
 
@@ -32,3 +32,7 @@ async def redirect_short_url(short_code: str):
         set_url_to_cache(short_code, original_url, ttl=3600)
     asyncio.create_task(update_link_stats(short_code))
     return RedirectResponse(url=original_url, status_code=302)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)

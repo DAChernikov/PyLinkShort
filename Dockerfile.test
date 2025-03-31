@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY backend backend
+COPY tests tests
+COPY backend/requirements.txt requirements.txt
+COPY pytest.ini pytest.ini
+ENV PYTHONPATH=/app/backend
+
+RUN pip install --upgrade pip \
+    && pip install -r requirements.txt \
+    && pip install pytest pytest-asyncio httpx pytest-cov locust
+
+CMD ["sh", "-c", "coverage run -m pytest tests && coverage report"]
