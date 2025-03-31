@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Отчет о покрытии тестами</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+    }
+    .summary {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #e0e0e0;
+      border-radius: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    /* Стиль для различной степени покрытия */
+    .coverage-100 {
+      background-color: #c8e6c9; /* светло-зеленый */
+    }
+    .coverage-medium {
+      background-color: #fff9c4; /* светло-желтый */
+    }
+    .coverage-low {
+      background-color: #ffcdd2; /* светло-красный */
+    }
+  </style>
+</head>
+<body>
+  <h1>Отчет о покрытии тестами</h1>
+  <div class="summary">
+    <p><strong>9 passed, 4 warnings in 2.78s</strong></p>
+    <p><strong>TOTAL:</strong> 427 Statements, 134 Missed, 69% Coverage</p>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Файл</th>
+        <th>Statements</th>
+        <th>Missed</th>
+        <th>Coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="coverage-100">
+        <td>backend/app/__init__.py</td>
+        <td>0</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>backend/app/api/__init__.py</td>
+        <td>0</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-low">
+        <td>backend/app/api/auth.py</td>
+        <td>42</td>
+        <td>24</td>
+        <td>43%</td>
+      </tr>
+      <tr class="coverage-low">
+        <td>backend/app/api/links.py</td>
+        <td>85</td>
+        <td>60</td>
+        <td>29%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>backend/app/core/__init__.py</td>
+        <td>0</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-low">
+        <td>backend/app/core/cache.py</td>
+        <td>13</td>
+        <td>7</td>
+        <td>46%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>backend/app/core/config.py</td>
+        <td>8</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-medium">
+        <td>backend/app/core/database.py</td>
+        <td>11</td>
+        <td>4</td>
+        <td>64%</td>
+      </tr>
+      <tr class="coverage-medium">
+        <td>backend/app/core/security.py</td>
+        <td>34</td>
+        <td>16</td>
+        <td>53%</td>
+      </tr>
+      <tr class="coverage-medium">
+        <td>backend/app/main.py</td>
+        <td>30</td>
+        <td>14</td>
+        <td>53%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>backend/app/models/__init__.py</td>
+        <td>0</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>backend/app/models/link.py</td>
+        <td>15</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>backend/app/models/user.py</td>
+        <td>13</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>backend/app/schemas/__init__.py</td>
+        <td>0</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>backend/app/schemas/link.py</td>
+        <td>30</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>backend/app/schemas/user.py</td>
+        <td>17</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>backend/app/services/__init__.py</td>
+        <td>0</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-medium">
+        <td>backend/app/services/analytics.py</td>
+        <td>18</td>
+        <td>7</td>
+        <td>61%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>backend/app/services/shortener.py</td>
+        <td>5</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>tests/__init__.py</td>
+        <td>0</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-medium">
+        <td>tests/conftest.py</td>
+        <td>14</td>
+        <td>2</td>
+        <td>86%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>tests/functional/__init__.py</td>
+        <td>0</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>tests/functional/test_auth.py</td>
+        <td>8</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>tests/functional/test_links.py</td>
+        <td>7</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>tests/functional/test_main.py</td>
+        <td>8</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>tests/functional/test_redirect.py</td>
+        <td>7</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>tests/test_async_api.py</td>
+        <td>28</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>tests/unit/__init__.py</td>
+        <td>0</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>tests/unit/test_analytics.py</td>
+        <td>16</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>tests/unit/test_security.py</td>
+        <td>13</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+      <tr class="coverage-100">
+        <td>tests/unit/test_shortener.py</td>
+        <td>5</td>
+        <td>0</td>
+        <td>100%</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
